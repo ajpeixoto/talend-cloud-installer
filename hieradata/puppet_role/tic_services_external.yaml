@@ -1,11 +1,8 @@
 ---
 java::distribution: "jre"
-java::package: "jre1.8"
-java::version: "1.8.0_181-fcs"
-java::java_home: "/usr/java/jre1.8.0_181-amd64"
-profile::java::packages:
-  'jre-jce':
-    ensure: '1.8.0_181-fcs'
+java::package: "java-1.8.0-openjdk"
+java::version: "present"
+java::java_home: "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64/jre"
 
 tic::services::java_home: "/usr/java/jre1.8.0_181-amd64"
 
