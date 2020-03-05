@@ -73,7 +73,7 @@ logrotate::rules:
     missingok: true
     create: true
     create_mode: 640
-    create_user: tomcat
+    create_owner: tomcat
     create_group: tomcat
     su_user: tomcat
     su_group: tomcat
@@ -87,7 +87,7 @@ logrotate::rules:
     missingok: true
     create: true
     create_mode: 640
-    create_user: tomcat
+    create_owner: tomcat
     create_group: tomcat
     su_user: tomcat
     su_group: tomcat
