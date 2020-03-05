@@ -71,10 +71,9 @@ logrotate::rules:
     rotate_every: 'hour'
     compress: true
     missingok: true
-    notifempty: true
     create: true
     create_mode: 640
-    create_user: tomcat
+    create_owner: tomcat
     create_group: tomcat
     su_user: tomcat
     su_group: tomcat
@@ -86,10 +85,9 @@ logrotate::rules:
     rotate_every: 'hour'
     compress: true
     missingok: true
-    notifempty: true
     create: true
     create_mode: 640
-    create_user: tomcat
+    create_owner: tomcat
     create_group: tomcat
     su_user: tomcat
     su_group: tomcat
