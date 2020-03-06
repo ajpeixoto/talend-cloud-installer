@@ -75,7 +75,8 @@ logrotate::rules:
     create_mode: 640
     create_owner: tomcat
     create_group: tomcat
-    su_user: tomcat
+    su: true
+    su_owner: tomcat
     su_group: tomcat
   tomcat_log:
     path: '/srv/tomcat/ipaas-srv/logs/*.log'
@@ -89,11 +90,24 @@ logrotate::rules:
     create_mode: 640
     create_owner: tomcat
     create_group: tomcat
-    su_user: tomcat
+    su: true
+    su_owner: tomcat
     su_group: tomcat
-
-
-
+  tomcat_json:
+    path: '/srv/tomcat/ipaas-srv/logs/*.json'
+    maxsize: '100M'
+    copytruncate: true
+    rotate: 5
+    rotate_every: 'hour'
+    compress: true
+    missingok: true
+    create: true
+    create_mode: 640
+    create_owner: tomcat
+    create_group: tomcat
+    su: true
+    su_owner: tomcat
+    su_group: tomcat
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/srv/tomcat/ipaas-srv/logs/catalina.out":
