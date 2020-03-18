@@ -6,7 +6,7 @@ java::java_home: "/usr/java/jre1.8.0_181-amd64"
 
 common_packages:
   'ptic-postgresql-schemes':
-    ensure: '2.1-1'
+    ensure: '2.2-2'
 
 activemq::version: '5.15.11-3'
 activemq::tcp_max_frame_size: 104857600  # 100MiB
