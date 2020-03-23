@@ -4,6 +4,7 @@
 define profile::postgresql::role {
 
   $role = $profile::postgresql::roles[$name]
+  $extensions = join(pick($role['extension'], []), ' ')
 
   postgresql::server::database { $name:
     dbname => $name,
@@ -19,6 +20,13 @@ define profile::postgresql::role {
     privilege => 'ALL',
     db        => $name,
     role      => $name,
+  }
+
+  if $extensions != '' {
+    postgresql::server::extension { $name:
+      database  => $name,
+      extension => $extensions,
+    }
   }
 
 }
