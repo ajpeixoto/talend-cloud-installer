@@ -63,7 +63,7 @@ kafka_infra_logs_cluster_ha: # estimated max cluster size: 102 GiB + customers o
         retention.bytes: "2147483648" # 2 GiB per partition
     zipkin: {}
 
-kafka_customers_logs_cluster_ha: # estimated max cluster size: 314 GiB + customers offsets => 120GiB per node
+kafka_customers_logs_cluster_ha: # estimated max cluster size: 114 GiB + customers offsets => 120GiB per node
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   log_level: 'INFO'
@@ -82,13 +82,13 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 314 GiB + custome
       topic_options:
         retention.ms: "43200000"      # 12h
         retention.bytes: "536870912" # 512MiB per partition
-    tmc_logs:
+    tmc_logs: # deprecated so reduced to minimal size
       partitions: "30"
       topic_options:
-        retention.ms: "43200000"        # 12h
-        retention.bytes: "3586297696"   # 3.34GiB per partition
-        max.message.bytes: "104857600"  # 100 MiB, align with ActiveMQ max message size
-        segment.ms: "300000"            # 5mn
+        retention.ms: "30"              # 30 ms
+        retention.bytes: "10240"        # 10 kiB per partition
+        max.message.bytes: "1024"       # 1 kiB
+        segment.ms: "1"                 # 1 ms
     audit-logs:
       topic_options:
         retention.ms: "86400000"        # 24h
