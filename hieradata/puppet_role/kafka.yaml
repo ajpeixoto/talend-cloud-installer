@@ -82,7 +82,7 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 114 GiB + custome
       topic_options:
         retention.ms: "43200000"      # 12h
         retention.bytes: "536870912" # 512MiB per partition
-    tmc_logs: # deprecated so reduced to minimal size
+    tmc_logs: # deprecated so reduced to minimal size (This was the topic which explains big disk size)
       partitions: "30"
       topic_options:
         retention.ms: "30"              # 30 ms
