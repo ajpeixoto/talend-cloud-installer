@@ -13,7 +13,7 @@ shared_examples 'profile::mongodb' do
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
     end
     describe command('/sbin/sysctl -a') do
-      its(:stdout) { should include 'kernel.pid_max = 128000' }
+      its(:stdout) { should include 'kernel.pid_max = 256000' }
       its(:stdout) { should include 'kernel.threads-max = 128000' }
       its(:stdout) { should include 'fs.file-max = 500000' }
       its(:stdout) { should include 'net.ipv4.tcp_keepalive_time = 120' }
