@@ -3,6 +3,6 @@
 [Service]
 Type=simple
 # open files
-LimitNOFILE=128000
+LimitNOFILE=256000
 # processes/threads
-LimitNPROC=128000
+LimitNPROC=256000

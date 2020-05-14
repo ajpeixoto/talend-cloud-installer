@@ -13,8 +13,8 @@ shared_examples 'profile::mongodb' do
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
     end
     describe command('/sbin/sysctl -a') do
-      its(:stdout) { should include 'kernel.pid_max = 128000' }
-      its(:stdout) { should include 'kernel.threads-max = 128000' }
+      its(:stdout) { should include 'kernel.pid_max = 256000' }
+      its(:stdout) { should include 'kernel.threads-max = 256000' }
       its(:stdout) { should include 'fs.file-max = 500000' }
       its(:stdout) { should include 'net.ipv4.tcp_keepalive_time = 120' }
       its(:stdout) { should include 'vm.zone_reclaim_mode = 0' }
@@ -29,8 +29,8 @@ shared_examples 'profile::mongodb' do
       it { should be_file }
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
       its(:content) { should include 'Type=simple' }
-      its(:content) { should include 'LimitNOFILE=128000' }
-      its(:content) { should include 'LimitNPROC=128000' }
+      its(:content) { should include 'LimitNOFILE=256000' }
+      its(:content) { should include 'LimitNPROC=256000' }
     end
     describe command('/bin/systemctl --no-pager show mongod.service') do
       its(:stdout) { should include 'Type=simple' }
