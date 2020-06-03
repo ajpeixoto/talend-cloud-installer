@@ -17,6 +17,8 @@ profile::postgresql::create_databases: false
 # Docker
 docker::service_state: "stopped"
 docker::service_enable: false
+docker::package_source_location: "https://download.docker.com/linux/centos/docker-ce.repo"
+docker::package_key_source: "https://download.docker.com/linux/centos/gpg"
 profile::docker::registry::ensure: "absent"
 profile::docker::registry::running: false
 profile::docker::ecs_agent::running: false
