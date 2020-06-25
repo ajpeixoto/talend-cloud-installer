@@ -81,5 +81,7 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
   }
   class { 'profile::nexus::nexus_mem_check':
   }
+  class { 'profile::nexus::nexus_add_volume':
+  }
 
 }
