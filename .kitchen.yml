@@ -131,6 +131,7 @@ suites:
         puppet_role: nexus
         cfn_resource_name: InstanceA
         storage_device: /dev/sdb
+        storage_data_device: /dev/sdc
     verifier:
       patterns:
         - 'spec/acceptance/nexus_spec.rb'
