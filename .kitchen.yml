@@ -123,6 +123,7 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+        - vagrant/second_data_disk.rb
       vm_name: nexus-tci
       customize:
         name: nexus-tci
