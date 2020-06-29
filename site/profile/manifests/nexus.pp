@@ -7,7 +7,7 @@ class profile::nexus (
   $nexus_nodes      = '', # A string f.e. '[ "10.0.2.12", "10.0.2.23" ]'
   $nexus_nodes_port = '8081',
   $storage_device   = undef,
-  $nexus_data_root  = '/data'
+  $nexus_data_root  = '/data',
   $storage_data_device = undef,
 ) {
 
