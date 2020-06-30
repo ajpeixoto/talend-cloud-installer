@@ -3,6 +3,7 @@ define profile::common::mount_device::fixup_ownership(
   $owner,
   $group,
   $fixup_ownership_require = undef,
+  $flag_file = "/var/tmp/${name}_ownership_fixup.done"
 ) {
 
   if $fixup_ownership_require {
@@ -11,9 +12,9 @@ define profile::common::mount_device::fixup_ownership(
     $_fixup_ownership_require = Mount[$path]
   }
 
-  exec { "chown -R ${owner}:${group} ${path} && touch /var/tmp/${name}.done":
+  exec { "chown -R ${owner}:${group} ${path} && touch ${flag_file}":
     path    => '/bin:/usr/bin',
-    creates => "/var/tmp/${name}.done",
+    creates => $flag_file,
     require => $_fixup_ownership_require
   }
 
