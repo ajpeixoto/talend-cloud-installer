@@ -34,8 +34,8 @@ shared_examples 'profile::mongodb' do
     end
     describe command('/bin/systemctl --no-pager show mongod.service') do
       its(:stdout) { should include 'Type=simple' }
-      its(:stdout) { should include 'LimitNOFILE=128000' }
-      its(:stdout) { should include 'LimitNPROC=128000' }
+      its(:stdout) { should include 'LimitNOFILE=256000' }
+      its(:stdout) { should include 'LimitNPROC=256000' }
     end
   end
 
@@ -98,12 +98,12 @@ shared_examples 'profile::mongodb' do
     describe file('/etc/security/limits.d/mongod.conf') do
       it { should be_file }
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
-      its(:content) { should match /\nmongod\s+soft\s+nproc\s+128000\s*\n/ }
-      its(:content) { should match /\nmongod\s+hard\s+nproc\s+128000\s*\n/ }
+      its(:content) { should match /\nmongod\s+soft\s+nproc\s+256000\s*\n/ }
+      its(:content) { should match /\nmongod\s+hard\s+nproc\s+256000\s*\n/ }
     end
     describe command('/bin/bash -c \'/bin/cat /proc/$(/bin/pgrep -x mongod)/limits\'') do
-      its(:stdout) { should match /\nMax processes\s+128000\s+128000\s+processes\s*\n/ }
-      its(:stdout) { should match /\nMax open files\s+128000\s+128000\s+files\s*\n/ }
+      its(:stdout) { should match /\nMax processes\s+256000\s+256000\s+processes\s*\n/ }
+      its(:stdout) { should match /\nMax open files\s+256000\s+256000\s+files\s*\n/ }
     end
   end
 
