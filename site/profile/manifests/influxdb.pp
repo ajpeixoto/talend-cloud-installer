@@ -16,7 +16,7 @@ class profile::influxdb (
 
   profile::register_profile { 'influxdb': }
 
-  class { '::profile::common::mount_device':
+  profile::common::mount_device { 'influxdb_storage':
     device  => $storage_device,
     path    => $influxdb_datapath,
     options => 'noatime,nodiratime,noexec',

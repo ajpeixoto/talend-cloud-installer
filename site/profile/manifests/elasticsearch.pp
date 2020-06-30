@@ -14,7 +14,7 @@ class profile::elasticsearch (
 
 ) {
 
-  class { '::profile::common::mount_device':
+  profile::common::mount_device { 'elasticsearch_storage':
     device  => $storage_device,
     path    => $datadir,
     options => 'noatime,nodiratime'

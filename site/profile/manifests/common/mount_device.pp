@@ -1,5 +1,4 @@
-class profile::common::mount_device (
-
+define profile::common::mount_device (
   $device    = undef,
   $path      = undef,
   $options   = 'noatime,nodiratime',
@@ -33,5 +32,4 @@ class profile::common::mount_device (
   } else {
     notice("Skipping mounting device '${device}' to path '${path}' : device or path is empty")
   }
-
 }

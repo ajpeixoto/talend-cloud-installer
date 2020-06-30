@@ -1,4 +1,4 @@
-class profile::common::mount_device::fixup_ownership(
+define profile::common::mount_device::fixup_ownership(
   $path,
   $owner,
   $group,
@@ -11,9 +11,9 @@ class profile::common::mount_device::fixup_ownership(
     $_fixup_ownership_require = Mount[$path]
   }
 
-  exec { "chown -R ${owner}:${group} ${path} && touch /var/tmp/mongo_db_path_ownership_fixup.done":
+  exec { "chown -R ${owner}:${group} ${path} && touch /var/tmp/${name}.done":
     path    => '/bin:/usr/bin',
-    creates => '/var/tmp/mongo_db_path_ownership_fixup.done',
+    creates => "/var/tmp/${name}.done",
     require => $_fixup_ownership_require
   }
 

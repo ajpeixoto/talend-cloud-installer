@@ -115,7 +115,7 @@ class profile::kafka (
   $java_xmx = floor($::memorysize_mb * 0.70)
   $java_xms = floor($::memorysize_mb * 0.50)
 
-  class { '::profile::common::mount_device':
+  profile::common::mount_device{ 'kafka_storage':
     device  => $storage_device,
     path    => $kafka_datapath,
     options => 'noatime,nodiratime,noexec',
@@ -142,7 +142,7 @@ class profile::kafka (
   }
 
   if $storage_device {
-    class { '::profile::common::mount_device::fixup_ownership':
+    profile::common::mount_device::fixup_ownership{ 'kafka_storage':
       path    => $kafka_datapath,
       owner   => 'kafka',
       group   => 'kafka',
