@@ -9,6 +9,7 @@ class profile::nexus (
   $storage_device   = undef,
   $nexus_data_root  = '/data',
   $storage_data_device = undef,
+  $nexus_shared_extra_volume = 'No'
 ) {
 
   require ::profile::java
@@ -67,12 +68,6 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
   }
   contain ::nexus
 
-  class { '::profile::common::mount_device':
-    device  => $storage_data_device,
-    path    => $nexus_data_root,
-    options => 'noatime,nodiratime'
-  }
-
   # [ "10.0.2.12:8081", "10.0.2.23:8081" ]
   $_nexus_nodes = suffix(
     unique(
@@ -88,5 +83,13 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     nexus_nodes => $_nexus_nodes,
   }
   class { 'profile::nexus::nexus_mem_check':
+  }
+
+  if $nexus_shared_extra_volume == 'Yes' {
+    class { 'profile::nexus::nexus_mount_data_device':
+      device  => $storage_device,
+      path    => $nexus_root,
+      options => 'noatime,nodiratime'
+    }
   }
 }
