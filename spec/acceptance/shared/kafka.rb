@@ -129,13 +129,6 @@ shared_examples 'profile::kafka' do
     it { should include 'max.message.bytes=10485760' }
   end
 
-  describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for dqDictionary" do
-    subject { command('/opt/kafka/bin/kafka-configs.sh --zookeeper "'+ zookeepernodes + '" --entity-type topics --entity-name dqDictionary --describe').stdout }
-    it { should include 'retention.bytes=6442450944' }
-    it { should include 'retention.ms=648000000' }
-    it { should include 'segment.ms=3600000' }
-  end
-
   #Verifying topic usability
   describe "Sending test message to tpsvclogs" do
     subject { command('echo "this is a very bad test message" | /opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic dispatcher').exit_status }
