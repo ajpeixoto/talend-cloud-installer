@@ -9,13 +9,10 @@ class profile::zookeeper (
 
   require ::profile::common::packagecloud_repos
   require ::profile::java
+  require ::monitoring::jmx_exporter
 
   include ::profile::common::concat
   include ::profile::common::cloudwatchlogs
-
-  class { '::monitoring::jmx_exporter':
-    before => Class['::zookeeper'],
-  }
 
   profile::register_profile { 'zookeeper': }
 

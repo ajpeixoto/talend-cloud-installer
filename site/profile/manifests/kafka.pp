@@ -22,14 +22,11 @@ class profile::kafka (
 ) {
 
   require ::profile::common::packages
+  require ::monitoring::jmx_exporter
   require ::profile::java
   include ::logrotate
   include ::profile::common::concat
   include ::profile::common::cloudwatchlogs
-
-  class { '::monitoring::jmx_exporter':
-    before => Class['::kafka'],
-  }
 
   profile::register_profile { 'kafka': }
 
