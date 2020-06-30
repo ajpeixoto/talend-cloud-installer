@@ -57,11 +57,6 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     path    => $nexus_root,
     options => 'noatime,nodiratime'
   } ->
-  profile::common::mount_device { 'nexus_second_storage':
-    device  => $storage_data_device,
-    path    => $nexus_data_root,
-    options => 'noatime,nodiratime'
-  } ->
   class { '::nexus':
     version         => '2.14.8',
     revision        => '01',
