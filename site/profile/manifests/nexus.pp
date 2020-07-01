@@ -7,6 +7,8 @@ class profile::nexus (
   $nexus_nodes      = '', # A string f.e. '[ "10.0.2.12", "10.0.2.23" ]'
   $nexus_nodes_port = '8081',
   $storage_device   = undef,
+  $storage_data_device = undef,
+  $nexus_data_root  = '/data',
 ) {
 
   require ::profile::java
@@ -30,13 +32,11 @@ class profile::nexus (
     selinux::module { 'nginx':
       content => '
 module nginx 1.0;
-
 require {
         type httpd_t;
         type transproxy_port_t;
         class tcp_socket name_connect;
 }
-
 allow httpd_t transproxy_port_t:tcp_socket name_connect;
 '
     }
@@ -50,10 +50,15 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
 
   $java_memory = floor($::memorysize_mb * 0.70)
 
-  class { '::profile::common::mount_device':
+  profile::common::mount_device { 'nexus_storage':
     device  => $storage_device,
     path    => $nexus_root,
     options => 'noatime,nodiratime'
+  } ->
+  profile::common::mount_device { 'nexus_second_storage':
+    device  => $storage_data_device,
+    path    => $nexus_data_root,
+    options => 'noatime,nodiratime,rw,nouuid'
   } ->
   class { '::nexus':
     version         => '2.14.8',
@@ -81,5 +86,4 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
   }
   class { 'profile::nexus::nexus_mem_check':
   }
-
 }

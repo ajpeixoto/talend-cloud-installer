@@ -15,6 +15,7 @@ nginx::config::proxy_send_timeout: '60'
 profile::nexus::nexus_nodes: "%{::nexus_nodes}"
 profile::nexus::nexus_nodes_port: "%{::nexus_nodes_port}"
 profile::nexus::storage_device: "%{::storage_device}"
+profile::nexus::storage_data_device: "%{::storage_data_device}"
 
 limits::fragment:
   "nexus/soft/nofile":

@@ -165,11 +165,11 @@ class profile::mongodb (
   class { '::profile::mongodb::verify_auth':
     auth_wanted => $mongo_auth_asked,
     flag_file   => $mongo_auth_flag_path,
-    require     => [Class['::profile::common::mount_device'], Class['::mongodb::server::config']],
+    require     => [ Profile::Common::Mount_device['mongodb_storage'], Class['::mongodb::server::config'] ],
     before      => Class['::mongodb::server::service']
   }
 
-  class { '::profile::common::mount_device':
+  profile::common::mount_device { 'mongodb_storage':
     device  => $storage_device,
     path    => $dbpath,
     options => 'noatime,nodiratime,noexec',
@@ -266,18 +266,16 @@ class profile::mongodb (
   }
 
   if $storage_device {
-    class { '::profile::common::mount_device::fixup_ownership':
+    profile::common::mount_device::fixup_ownership { 'mongodb_storage':
       path                    => $dbpath,
       owner                   => 'mongod',
       group                   => 'mongod',
       fixup_ownership_require => Package['mongodb_server']
-    }
-
+    }->
     swap_file::files { 'mongo_swap':
       ensure       => $swap_ensure,
       swapfile     => "${dbpath}/mongo.swap",
-      swapfilesize => $::memorysize,
-      require      => Class['::profile::common::mount_device::fixup_ownership']
+      swapfilesize => $::memorysize
     }
   }
 

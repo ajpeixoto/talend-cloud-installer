@@ -1,8 +1,9 @@
-class profile::common::mount_device::fixup_ownership(
+define profile::common::mount_device::fixup_ownership(
   $path,
   $owner,
   $group,
   $fixup_ownership_require = undef,
+  $flag_file = "/var/tmp/${name}_ownership_fixup.done"
 ) {
 
   if $fixup_ownership_require {
@@ -11,9 +12,9 @@ class profile::common::mount_device::fixup_ownership(
     $_fixup_ownership_require = Mount[$path]
   }
 
-  exec { "chown -R ${owner}:${group} ${path} && touch /var/tmp/mongo_db_path_ownership_fixup.done":
+  exec { "chown -R ${owner}:${group} ${path} && touch ${flag_file}":
     path    => '/bin:/usr/bin',
-    creates => '/var/tmp/mongo_db_path_ownership_fixup.done',
+    creates => $flag_file,
     require => $_fixup_ownership_require
   }
 

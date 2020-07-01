@@ -46,7 +46,7 @@ class profile::docker::registry (
         ensure => directory,
         path   => $filesystem_path,
       } ->
-      class { '::profile::common::mount_device':
+      profile::common::mount_device { 'docker_storage':
         device  => $filesystem_device,
         path    => $filesystem_path,
         options => 'noatime,nodiratime',

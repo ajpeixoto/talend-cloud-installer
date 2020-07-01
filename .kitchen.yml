@@ -131,9 +131,27 @@ suites:
         puppet_role: nexus
         cfn_resource_name: InstanceA
         storage_device: /dev/sdb
+        storage_data_device: ""
     verifier:
       patterns:
         - 'spec/acceptance/nexus_spec.rb'
+  - name: role-nexus-2disks
+    driver:
+      vagrantfiles:
+        - vagrant/second_disk.rb
+        - vagrant/third_disk.rb
+      vm_name: nexus-2d-tci
+      customize:
+        name: nexus-2d-tci
+    provisioner:
+      custom_facts:
+        puppet_role: nexus
+        cfn_resource_name: InstanceA
+        storage_device: /dev/sdb
+        storage_data_device: /dev/sdc
+    verifier:
+      patterns:
+        - 'spec/acceptance/nexus_2disks_spec.rb'
   - name: role-syncope
     driver:
       vm_name: syncope-tci
