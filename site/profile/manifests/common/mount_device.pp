@@ -5,7 +5,9 @@ define profile::common::mount_device (
 
 ) {
 
-  if $device and $path {
+  if empty($device) or empty($path) {
+    notice("Skipping mounting device '${device}' to path '${path}' : device or path is empty")
+  } else {
     filesystem { "Filesystem ${device}":
       ensure  => present,
       name    => $device,
@@ -29,7 +31,5 @@ define profile::common::mount_device (
       options => $options,
       atboot  => true
     }
-  } else {
-    notice("Skipping mounting device '${device}' to path '${path}' : device or path is empty")
   }
 }
