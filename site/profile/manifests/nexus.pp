@@ -66,11 +66,12 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     java_maxmemory  => $java_memory
   }
   contain ::nexus
-
-  profile::common::mount_device { 'nexus_second_storage':
-    device  => $storage_data_device,
-    path    => $nexus_data_root,
-    options => 'noatime,nodiratime'
+  if $storage_data_device != 'Absent'{
+    profile::common::mount_device { 'nexus_second_storage':
+      device  => $storage_data_device,
+      path    => $nexus_data_root,
+      options => 'noatime,nodiratime'
+    }
   }
 
   # [ "10.0.2.12:8081", "10.0.2.23:8081" ]
