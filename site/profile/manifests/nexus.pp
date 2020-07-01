@@ -32,13 +32,11 @@ class profile::nexus (
     selinux::module { 'nginx':
       content => '
 module nginx 1.0;
-
 require {
         type httpd_t;
         type transproxy_port_t;
         class tcp_socket name_connect;
 }
-
 allow httpd_t transproxy_port_t:tcp_socket name_connect;
 '
     }
@@ -57,6 +55,11 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     path    => $nexus_root,
     options => 'noatime,nodiratime'
   } ->
+  profile::nexus::mount_device_nexus { 'nexus_second_storage':
+    device  => $storage_data_device,
+    path    => $nexus_data_root,
+    options => 'noatime,nodiratime'
+  } ->
   class { '::nexus':
     version         => '2.14.8',
     revision        => '01',
@@ -66,13 +69,6 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     java_maxmemory  => $java_memory
   }
   contain ::nexus
-  if $storage_data_device != 'Absent'{
-    profile::common::mount_device { 'nexus_second_storage':
-      device  => $storage_data_device,
-      path    => $nexus_data_root,
-      options => 'noatime,nodiratime'
-    }
-  }
 
   # [ "10.0.2.12:8081", "10.0.2.23:8081" ]
   $_nexus_nodes = suffix(
