@@ -64,6 +64,13 @@ shared_examples 'profile::nexus' do
     end
   end
 
+  describe "testing healthcheck" do
+    subject { command("/usr/bin/curl -v -f -X GET http://localhost:80/health 2>&1") }
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should include 'HTTP/1.1 200 OK' }
+    its(:stdout) { should include 'pong' }
+  end
+
   describe port(80) do
     it { should be_listening }
   end
