@@ -83,4 +83,13 @@ class profile::nexus::nginx (
     total => size($_nexus_locations)
   }
 
+  $basic_auth_b64 = base64('encode', "admin:${::nexus::admin_password}", 'strict')
+    nginx::resource::location { 'nexus_healthcheck':
+    vhost                 => $vhost,
+    location              => '= /health',
+    proxy                 => 'http://localhost:8081/nexus/internal/ping',
+    proxy_read_timeout    => '10',
+    proxy_connect_timeout => '10',
+    raw_append            => [ "proxy_set_header Authorization \"Basic ${basic_auth_b64}\";" ]
+  }
 }
