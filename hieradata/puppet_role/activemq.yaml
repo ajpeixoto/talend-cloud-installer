@@ -4,11 +4,7 @@ java::package: "jre1.8"
 java::version: "1.8.0_181-fcs"
 java::java_home: "/usr/java/jre1.8.0_181-amd64"
 
-common_packages:
-  'ptic-postgresql-schemes':
-    ensure: '2.2-2'
-
-activemq::version: '5.15.11-3'
+activemq::version: '5.15.13-1'
 activemq::tcp_max_frame_size: 104857600  # 100MiB
 activemq::http_max_frame_size: 52428800  # 50MiB
 activemq::jmx_enabled: true
@@ -36,39 +32,6 @@ activemq::jetty_server_max_threads: 3000
 profile::activemq::network_broker_endpoint: '%{::active_mq_network_connect}'
 
 monitoring::jmx_exporter::jmx_exporter_service: 'activemq'
-
-profile::postgresql::roles:
-  ams:
-    files:
-      - /opt/activemq/lib/tipaas/ams.sql
-      - /opt/activemq/lib/tipaas/amqsec.sql
-  # The following roles shouldn't be placed here, as
-  # well as the ptic-postgresql-schemes package.
-  # The only reason is that the active mq instance A is
-  # used as a single point of postgresql provisioning.
-  scheduler:
-    files:
-      - /var/tmp/sql/scheduler.sql
-  lts:
-    files:
-      - /var/tmp/sql/lts.sql
-  cms:
-    files:
-      - /var/tmp/sql/cms.sql
-  config:
-    files:
-      - /var/tmp/sql/config.sql
-  pe:
-    files:
-      - /var/tmp/sql/pes.sql
-  webhooks:
-    files:
-      - /var/tmp/sql/webhooks.sql
-    extension:
-      - pgcrypto
-  notification_subscription:
-    files:
-      - /var/tmp/sql/notification-subscription.sql
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/activemq/data/activemq.log":
