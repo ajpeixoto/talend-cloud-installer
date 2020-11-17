@@ -36,6 +36,7 @@ profile::tic_services::nexus_nodes: '[ "10.0.2.12", "10.0.2.23" ]'
 profile::tic_services::nexus_nodes_port: '8081'
 profile::tic_services::cms_nexus_url: 'http://10.0.2.12'
 profile::nexus::nexus_nodes_port: "8081"
+
 profile::postgresql::service_ensure: running
 profile::postgresql::create_databases: true
 profile::postgresql::username: postgres
@@ -47,41 +48,9 @@ postgresql::globals::default_connect_settings:
   PGDATABASE: "postgres"
   PGPASSWORD: "%{::master_password}"
 
-
 activemq::pg_host: "localhost"
 activemq::persistence_pg_host: "localhost"
-# The dict above must be the same than the one inside hieradata/puppet_role/activemq.yaml
-# + activemq
 profile::postgresql::roles:
-  ams:
-    files:
-      - /opt/activemq/lib/tipaas/ams.sql
-      - /opt/activemq/lib/tipaas/amqsec.sql
-  # The following roles shouldn't be placed here, as
-  # well as the ptic-postgresql-schemes package.
-  # The only reason is that the active mq instance A is
-  # used as a single point of postgresql provisioning.
-  scheduler:
-    files:
-      - /var/tmp/sql/scheduler.sql
-  lts:
-    files:
-      - /var/tmp/sql/lts.sql
-  cms:
-    files:
-      - /var/tmp/sql/cms.sql
-  config:
-    files:
-      - /var/tmp/sql/config.sql
-  pe:
-    files:
-      - /var/tmp/sql/pes.sql
-  webhooks:
-    files:
-      - /var/tmp/sql/webhooks.sql
-  notification_subscription:
-    files:
-      - /var/tmp/sql/notification-subscription.sql
   activemq:
     password: "%{::master_password}"
     files: []

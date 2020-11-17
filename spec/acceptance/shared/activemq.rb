@@ -24,7 +24,7 @@ shared_examples 'profile::activemq' do
   end
 
   describe package('activemq') do
-    it { should be_installed.with_version('5.15.11-3') }
+    it { should be_installed.with_version('5.15.13-1') }
   end
 
 	describe service('activemq') do
@@ -41,6 +41,10 @@ shared_examples 'profile::activemq' do
 	end
 
   describe package('jre-jce') do
+    it { should_not be_installed }
+  end
+
+  describe package('ptic-postgresql-schemes') do
     it { should_not be_installed }
   end
 

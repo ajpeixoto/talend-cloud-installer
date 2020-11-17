@@ -43,19 +43,15 @@ class profile::activemq(
   }
 
   # prevent postgres provisioning on all the nodes except one: ActiveMQ-A
-  # this should be replaced with more sophisticated solution in the future
+  # this will be replaced by a deployment provisioning:
+  #  https://github.com/Talend/infra-activemq/blob/master/docs/design/infra-parity-migration/activemq_migration_plan.md#task-improve-the-deployment-process-to-handle-database-optimization-for-activemq
   $ec2_userdata = pick_default($::ec2_userdata, '')
-  if $ec2_userdata =~ /InstanceA/ {
-    # The part for AMS password is totaly outdated: https://jira.talendforge.org/browse/DEVOPS-4952
-
-    class { '::activemq':
+  class { '::activemq':
       network_connector_uri => $network_broker_uri,
-    } ->
-    class { '::profile::postgresql::provision': }
+  }
+  contain ::activemq
 
-    contain ::activemq
-    contain ::profile::postgresql::provision
-
+  if $ec2_userdata =~ /InstanceA/ {
     if (( $::activemq::persistence == 'postgres')
       and (($::activemq::service_ensure == 'running')
         or ($::activemq::service_ensure == 'true'))) {
@@ -68,10 +64,6 @@ class profile::activemq(
           require => Class['::activemq']
         }
       }
-    }
-  } else {
-    class { '::activemq':
-      network_connector_uri => $network_broker_uri,
     }
   }
 }
